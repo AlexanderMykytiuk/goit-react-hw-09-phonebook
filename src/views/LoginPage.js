@@ -10,10 +10,6 @@ function LoginPage() {
 
   const dispatch = useDispatch();
 
-  // state = {
-  //   email: '',
-  //   password: '',
-  // };
   const handleChange = e => {
     switch (e.target.name) {
       case 'email':
@@ -25,7 +21,6 @@ function LoginPage() {
       default:
         return;
     }
-    // this.setState({ [e.target.name]: e.target.value });
   };
   const onLogin = useCallback(e => dispatch(operation.login(e)), [dispatch]);
 
@@ -36,15 +31,6 @@ function LoginPage() {
     setEmail('');
     setPassword('');
   };
-  // const handleSubmit = e => {
-  //   e.preventDefault();
-  //   dispatch(operation.login(email, password));
-  //   // this.props.onLogin(this.state);
-  //   setPassword('');
-  //   setEmail('');
-  //   // setPassword(password);
-  //   // this.setState({ name: '', email: '', password: '' });
-  // };
 
   return (
     <div className={styles.LoginRegistrationPage}>
@@ -89,7 +75,4 @@ function LoginPage() {
     </div>
   );
 }
-// const mapDispatchtoProps = {
-//   onLogin: operation.login,
-// };
 export default LoginPage;

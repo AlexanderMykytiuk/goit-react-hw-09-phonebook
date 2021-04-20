@@ -18,11 +18,10 @@ const {
 axios.defaults.baseURL = 'https://goit-phonebook-api.herokuapp.com';
 
 const token = {
-  // когда пользователь зарегестриловался/залогинился устанавливаем заголовок:
   set(token) {
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
   },
-  // снимаем когда пользователь разлогинился:
+
   unset() {
     axios.defaults.headers.common.Authorization = ``;
   },
@@ -61,7 +60,7 @@ const logout = () => async dispatch => {
     dispatch(logoutError(error.message));
   }
 };
-// с помощью getState получаем доступ к PersistGate
+
 const getCurrentUser = () => async (dispatch, getState) => {
   const {
     autorization: { token: persistedToken },

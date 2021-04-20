@@ -5,20 +5,12 @@ import styles from './common.module.scss';
 import { TextField, Button } from '@material-ui/core';
 
 function RegistrationPage() {
-  // state = {
-  //   name: '',
-  //   email: '',
-  //   password: '',
-  // };
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
 
   const dispatch = useDispatch();
 
-  //  handleChange = e => {
-  //     this.setState({ [e.target.name]: e.target.value });
-  //   };
   const handleChange = e => {
     switch (e.target.name) {
       case 'email':

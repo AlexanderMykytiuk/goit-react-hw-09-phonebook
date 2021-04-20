@@ -1,16 +1,15 @@
-
-.container{
+.container {
   display: block;
   text-align: center;
-align-items: center;
+  align-items: center;
 }
 .list {
   margin-left: auto;
   margin-right: auto;
   padding-left: 0px;
-    text-align: center;
+  text-align: center;
   width: 100%;
-     @media screen and (min-width: 480px) {
+  @media screen and (min-width: 480px) {
     width: 400px;
   }
 }

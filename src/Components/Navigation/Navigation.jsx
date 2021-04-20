@@ -17,7 +17,6 @@ function Navigation() {
         className={styles.svg}
         exact
         to={routes.home}
-        // eslint-disable-next-line react/jsx-no-duplicate-props
         className={styles.current}
         activeClassName={styles.selected}
         id="home"

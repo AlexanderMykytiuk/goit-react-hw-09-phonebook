@@ -1,18 +1,18 @@
-ul{
-    margin: 0px;
-    list-style: none;
+ul {
+  margin: 0px;
+  list-style: none;
 }
-li:not(:last-child){
-    margin-bottom: 10px;
+li:not(:last-child) {
+  margin-bottom: 10px;
 }
-.current{
-    color:rgb(5, 54, 39)
+.current {
+  color: rgb(5, 54, 39);
 }
 .selected {
-    color:rgb(50, 255, 152);
-    text-decoration: underline;
+  color: rgb(50, 255, 152);
+  text-decoration: underline;
 }
-.input{
-    margin-bottom: -5px;
-    margin-left: 10px;
+.input {
+  margin-bottom: -5px;
+  margin-left: 10px;
 }
