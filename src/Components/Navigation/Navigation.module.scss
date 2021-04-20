@@ -1,0 +1,20 @@
+.svg{
+    display: flex;
+    align-items: center;
+}
+.home{
+    margin-bottom:-5px;
+}
+a{
+    text-decoration: none;
+}
+.contacts{
+    margin-top: 10px;
+}
+.current{
+   color:rgb(5, 54, 39);
+}
+.selected {
+    color:rgb(50, 255, 152);
+    text-decoration: underline;
+}

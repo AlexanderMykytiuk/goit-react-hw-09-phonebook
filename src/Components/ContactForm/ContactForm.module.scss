@@ -1,0 +1,26 @@
+.container{
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+}
+
+.form {
+   width: 100%;
+     @media screen and (min-width: 480px) {
+    width: 400px;
+  }
+}
+
+.input {
+  max-width: 600px;
+  height: 30px;
+}
+
+.label {
+  margin-bottom: 20px;
+  font-weight: bold;
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+}

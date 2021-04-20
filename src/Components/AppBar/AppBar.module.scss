@@ -1,0 +1,19 @@
+.containerHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+header {
+  box-shadow: 0px -5px 5px -5px rgba(11, 153, 70, 0.6) inset;
+
+  padding: 30px;
+
+  @media screen and (min-width: 768px) {
+    padding-left: 100px;
+    padding-right: 100px;
+  }
+  @media screen and (min-width: 1000px) {
+    padding-left: 200px;
+    padding-right: 200px;
+  }
+}
