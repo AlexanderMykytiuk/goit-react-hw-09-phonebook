@@ -1,20 +1,23 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import routes from '../../routes';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import authSelectors from '../../redux/Auth/auth-selectors';
 
 import SvgIcon from '@material-ui/core/SvgIcon';
 
 import styles from './Navigation.module.scss';
 
-const Navigation = ({ isAuthenticated }) => {
+function Navigation() {
+  const isLoggedIn = useSelector(authSelectors.getIsAuthenticated);
+
   return (
     <div>
       <NavLink
         className={styles.svg}
         exact
         to={routes.home}
+        // eslint-disable-next-line react/jsx-no-duplicate-props
         className={styles.current}
         activeClassName={styles.selected}
         id="home"
@@ -26,7 +29,7 @@ const Navigation = ({ isAuthenticated }) => {
       </NavLink>
 
       <div className={styles.contacts}>
-        {isAuthenticated && (
+        {isLoggedIn && (
           <NavLink
             exact
             to={routes.contacts}
@@ -40,11 +43,6 @@ const Navigation = ({ isAuthenticated }) => {
       </div>
     </div>
   );
-};
+}
 
-const mapStateToPros = state => ({
-  isAuthenticated: authSelectors.getIsAuthenticated(state),
-});
-export default connect(mapStateToPros)(Navigation);
-
-// export default Navigation;
+export default Navigation;

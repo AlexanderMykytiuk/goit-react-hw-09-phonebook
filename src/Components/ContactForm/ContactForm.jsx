@@ -1,23 +1,42 @@
-import React from 'react';
-
+import React, { useState, useCallback } from 'react';
 import styles from './ContactForm.module.scss';
 import Button from '../Button';
 import { toast } from 'react-toastify';
+import { useSelector, useDispatch } from 'react-redux';
+import { contactsOperation } from '../../redux/Contacts';
+import { getContacts } from '../../redux/Contacts/contacts-selectors';
 
-class ContactForm extends React.Component {
-  state = {
-    name: '',
-    number: '',
-  };
-  handleInputChange = event => {
+function ContactForm() {
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+
+  const contacts = useSelector(getContacts);
+  const dispatch = useDispatch();
+
+  const addContact = useCallback(
+    (name, number) => dispatch(contactsOperation.addContact(name, number)),
+    [dispatch],
+  );
+
+  const handleInputChange = event => {
     const valueInput = event.currentTarget.name;
-    this.setState({ [valueInput]: event.currentTarget.value.trimLeft() });
+
+    switch (valueInput) {
+      case 'name':
+        setName(event.currentTarget.value);
+        break;
+
+      case 'number':
+        setNumber(event.currentTarget.value);
+        break;
+
+      default:
+        return;
+    }
   };
 
-  handleSubmit = event => {
+  const handleSubmit = event => {
     event.preventDefault();
-    const { contacts, addContact } = this.props;
-    const { name, number } = this.state;
     let expression = /^\d+/;
     if (!name || !number || expression.test(number) === false) {
       return toast('Please fill all fields in the correct format');
@@ -29,49 +48,46 @@ class ContactForm extends React.Component {
 
     if (findName) {
       toast(`${name} is already in the contacts`);
-      this.reset();
+      reset();
     } else {
       addContact(name, number);
-      this.reset();
+      reset();
     }
   };
-  reset = () => {
-    this.setState({
-      name: '',
-      number: '',
-    });
+
+  const reset = () => {
+    setName('');
+    setNumber('');
   };
-  render() {
-    const { name, number } = this.state;
-    return (
-      <div className={styles.container}>
-        <h2>Add new contacts</h2>
-        <form onSubmit={this.handleSubmit} className={styles.form}>
-          <label className={styles.label}>
-            Name
-            <input
-              className={styles.input}
-              name="name"
-              type="text"
-              value={name}
-              onChange={this.handleInputChange}
-            />
-          </label>
-          <label className={styles.label}>
-            Number
-            <input
-              className={styles.input}
-              name="number"
-              type="tel"
-              value={number}
-              onChange={this.handleInputChange}
-            />
-          </label>
-          <Button text="Add contact" type="submit" />
-        </form>
-      </div>
-    );
-  }
+
+  return (
+    <div className={styles.container}>
+      <h2>Add new contacts</h2>
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <label className={styles.label}>
+          Name
+          <input
+            className={styles.input}
+            name="name"
+            type="text"
+            value={name}
+            onChange={handleInputChange}
+          />
+        </label>
+        <label className={styles.label}>
+          Number
+          <input
+            className={styles.input}
+            name="number"
+            type="tel"
+            value={number}
+            onChange={handleInputChange}
+          />
+        </label>
+        <Button text="Add contact" type="submit" />
+      </form>
+    </div>
+  );
 }
 
 export default ContactForm;

@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Container from './Components/Container';
@@ -8,9 +8,9 @@ import AppBar from './Components/AppBar';
 // import LoginPage from './views/LoginPage';
 // import RegistrationPage from './views/RegistrationPage';
 import authOperation from './redux/Auth/auth-operation';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import Spinner from './Components/Spinner';
 import routes from './routes';
 import { Wave } from 'jparticles';
@@ -32,9 +32,22 @@ const RegistrationPage = lazy(() =>
     './views/RegistrationPage.js' /* webpackChunkName: "Registration-page" */
   ),
 );
-class App extends React.Component {
-  componentDidMount() {
-    this.props.onGetCurrentUser();
+// useEffect вызывается каждый раз когда обновляется компонент
+
+function App() {
+  // componentDidMount() {
+  //     this.props.onGetCurrentUser();
+  //     new Particle('#demo', {
+  //       proximity: 90,
+  //       range: 130,
+  //       maxSpeed: 0.6,
+  //       lineShape: 'spider',
+  //       parallax: true,
+  //     });
+  //   }
+  const dispatch = useDispatch();
+
+  useEffect(() => {
     new Wave('#demo', {
       num: 3,
       // Draw line
@@ -57,61 +70,53 @@ class App extends React.Component {
       crestCount: 2,
       speed: 0.1,
     });
-  }
-  render() {
-    return (
-      // <Container>
-      <div>
-        <div id="demo" className={styles.demo}></div>
-        <Container>
-          <ToastContainer />
-          <Suspense fallback={<Spinner />}>
-            <AppBar />
-            <Switch>
-              <Route exact path={routes.home} component={HomePage} />
-              <PrivateRoute
-                exact
-                path={routes.contacts}
-                component={ContactsPage}
-                redirectTo="/login/"
-              />
-              <PublicRoute
-                exact
-                path={routes.login}
-                component={LoginPage}
-                restricted
-                redirectTo="/contacts/"
-              />
-              <PublicRoute
-                exact
-                path={routes.registration}
-                component={RegistrationPage}
-                restricted
-                redirectTo="/contacts/"
-              />
-            </Switch>
-          </Suspense>
-        </Container>
-      </div>
-      //  {/* </Container> */}
-    );
-  }
+    // передаем массив зависимостей(при каком значении должно выполнятся), если не передавать то useEffect выполняется при каждом изменении стейта,
+    // либо же передавать пустой массив для рендeра- 1раз
+  }, []);
+  useEffect(() => {
+    dispatch(authOperation.getCurrentUser());
+  }, [dispatch]);
+  return (
+    <div>
+      <div id="demo" className={styles.demo}></div>
+      <Container>
+        <ToastContainer />
+        <Suspense fallback={<Spinner />}>
+          <AppBar />
+          <Switch>
+            {/* <Route exact path={routes.home} component={HomePage} /> */}
+            <PublicRoute exact path="/">
+              <HomePage />
+            </PublicRoute>
+            <PrivateRoute exact path={routes.contacts} redirectTo="/login/">
+              <ContactsPage />
+            </PrivateRoute>
+            <PublicRoute
+              exact
+              path={routes.login}
+              // component={LoginPage}
+              restricted
+              redirectTo="/contacts/"
+            >
+              <LoginPage />
+            </PublicRoute>
+            <PublicRoute
+              exact
+              path={routes.registration}
+              // component={RegistrationPage}
+              restricted
+              redirectTo="/contacts/"
+            >
+              <RegistrationPage />
+            </PublicRoute>
+          </Switch>
+        </Suspense>
+      </Container>
+    </div>
+  );
 }
+export default App;
 
-// function App() {
-//   return (
-//     <Container>
-//       <ToastContainer />
-//       <AppBar />
-//       <Route exact path={routes.home} component={HomePage} />
-//       <Route exact path={routes.contacts} component={ContactsPage} />
-//       <Route exact path={routes.login} component={LoginPage} />
-//       <Route exact path={routes.registration} component={RegistrationPage} />
-//     </Container>
-//   );
-// }
-const mapDispathToProps = {
-  onGetCurrentUser: authOperation.getCurrentUser,
-};
-
-export default connect(null, mapDispathToProps)(App);
+// const mapDispathToProps = {
+//   onGetCurrentUser: authOperation.getCurrentUser,
+// };

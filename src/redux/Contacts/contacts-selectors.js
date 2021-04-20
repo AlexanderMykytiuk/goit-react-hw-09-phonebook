@@ -13,13 +13,3 @@ export const getVisibleContacts = createSelector(
     );
   },
 );
-// то что было до createSelector
-
-// export const getVisibleContacts = state => {
-//   const filter = getFilter(state);
-//   const contacts = getContacts(state);
-//   const normalizedContact = filter.toLowerCase();
-//   return contacts.filter(contact =>
-//     contact.name.toLowerCase().includes(normalizedContact),
-//   );
-// };
